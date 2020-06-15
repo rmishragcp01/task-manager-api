@@ -34,16 +34,17 @@ router.delete('/users/me/avatar', auth, async(req,res)=>{
     await req.user.save()
     res.send(req.user)
 })
-router.get('/users/:id/avatar', async (req,res) =>{
+/*Return the associated avart of the authenticted user, img tag need to resolve from binary data*/
+router.get('/users/avatar/me', auth,async (req,res) =>{
     try{
-        const user = await User.findById(req.params.id)
+        const user = req.user
         if(!user || !user.avatar){
             throw new Error()
         }
         res.set('Content-Type','image/jpg')
         res.send(user.avatar)
     }catch(e){
-        res.status(404).send()
+        res.status(404).send({error: 'No profile picture found associated to the profile'})
     }
 })
 /*Create a new user */
