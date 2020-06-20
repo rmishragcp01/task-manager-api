@@ -9,7 +9,7 @@ const sharp = require('sharp')
 /*Configure multer with validation option */
 const uploadAvatar = multer({
     limits:{
-        fileSize: 1000000
+        fileSize: 4000000
     },
     fileFilter(req,file,cb){
         if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
@@ -110,7 +110,7 @@ router.post('/users',async (req,res)=>{
           await req.user.remove()
           res.send(req.user)
      }catch(e){
-          res.status(500).send()
+          res.status(401).send()
      }
  })
 /*Find a user by email and password*/
